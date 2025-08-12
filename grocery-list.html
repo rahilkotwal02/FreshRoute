@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Meal Planner - Grocery List</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <header class="main-header">
+            <h1>🛒 Your Grocery List</h1>
+            <div class="user-info">
+                <span id="userEmail" class="user-email"></span>
+                <button onclick="window.location.href='appointments.html'" class="btn-success">👨‍⚕️
+                    Appointments</button>
+                <button onclick="window.location.href='profile.html'" class="btn-info">👤 Profile</button>
+                <button id="logoutBtn" class="btn-secondary">Logout</button>
+            </div>
+
+        </header>
+
+        <div class="content">
+            <div class="grocery-container">
+                <div class="plan-actions">
+                    <button onclick="window.location.href='meal-planner.html'" class="btn-secondary">
+                        ← Back to Meal Plan
+                    </button>
+                    <button id="printBtn" onclick="printGroceryList()" class="btn-info">
+                        🖨️ Print List
+                    </button>
+                    <button id="exportBtn" onclick="exportGroceryList()" class="btn-info">
+                        📄 Export CSV
+                    </button>
+                </div>
+
+                <div id="groceryStats" class="grocery-stats"></div>
+
+                <div id="groceryListContent" class="grocery-content">
+                    <div class="loading-placeholder">
+                        <div class="spinner"></div>
+                        <p>Loading your grocery list...</p>
+                    </div>
+                </div>
+
+                <div id="messages"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="config-local.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/displayGrocery.js"></script>
+    <script src="js/orderManager.js"></script>
+
+</body>
+
+</html>

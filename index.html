@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Meal Planner - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="auth-container">
+            <h1>🍽️ Smart Meal Planner</h1>
+            <p class="subtitle">Your personal meal planning assistant</p>
+
+
+            <div id="login-form" class="form-container">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" required placeholder="Use random email, signup for new user">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password:</label>
+                        <input type="password" id="loginPassword" required placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                <p class="switch-form">Don't have an account? <a href="#" id="showSignup">Sign up</a></p>
+            </div>
+
+            <div id="signup-form" class="form-container hidden">
+                <h2>Sign Up</h2>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="signupEmail">Email:</label>
+                        <input type="email" id="signupEmail" required placeholder="Use random email">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password:</label>
+                        <input type="password" id="signupPassword" required minlength="6"
+                            placeholder="At least 6 characters">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" required placeholder="Confirm your password">
+                    </div>
+                    <button type="submit" class="btn-primary">Sign Up</button>
+                </form>
+                <p class="switch-form">Already have an account? <a href="#" id="showLogin">Login</a></p>
+            </div>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Processing...</p>
+            </div>
+
+            <div id="messages"></div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="config-local.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

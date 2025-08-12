@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Meal Planner - My Profile</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>👤 My Profile</h1>
+            <div class="user-info">
+                <span id="userEmail" class="user-email"></span>
+                <button id="logoutBtn" class="btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="profile-container">
+                <div class="profile-navigation">
+                    <button onclick="window.location.href='user.html'" class="btn-secondary">
+                        ← Back to Meal Planning
+                    </button>
+                    <button onclick="window.location.href='meal-planner.html'" class="btn-info">
+                        🍽️ View Meal Plans
+                    </button>
+                </div>
+
+                <div class="profile-sections">
+                    <!-- Profile Picture Section -->
+                    <div class="profile-section">
+                        <h3>📷 Profile Picture</h3>
+                        <div class="profile-picture-container">
+                            <div class="profile-picture" id="profilePicture">
+                                <span class="profile-initial" id="profileInitial">?</span>
+                                <img id="profileImage" class="hidden" alt="Profile Picture">
+                            </div>
+                            <div class="picture-actions">
+                                <input type="file" id="pictureInput" accept="image/*" class="hidden">
+                                <button onclick="document.getElementById('pictureInput').click()" class="btn-info">
+                                    📁 Upload Photo
+                                </button>
+                                <button onclick="profileManager.removeProfilePicture()" class="btn-secondary"
+                                    id="removePictureBtn" style="display: none;">
+                                    🗑️ Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Basic Information -->
+                    <div class="profile-section">
+                        <h3>👤 Basic Information</h3>
+                        <form id="basicInfoForm" class="profile-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name:</label>
+                                    <input type="text" id="fullName" placeholder="Enter your full name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number:</label>
+                                    <input type="tel" id="phone" placeholder="Enter your phone number">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dateOfBirth">Date of Birth:</label>
+                                    <input type="date" id="dateOfBirth">
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Gender:</label>
+                                    <select id="gender">
+                                        <option value="">Select gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                        <option value="prefer_not_to_say">Prefer not to say</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emergencyContact">Emergency Contact:</label>
+                                <input type="text" id="emergencyContact" placeholder="Name and phone number">
+                            </div>
+
+                            <button type="submit" class="btn-primary">💾 Save Basic Info</button>
+                        </form>
+                    </div>
+
+                    <!-- Health & Fitness -->
+                    <div class="profile-section">
+                        <h3>💪 Health & Fitness</h3>
+                        <form id="healthFitnessForm" class="profile-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="height">Height (cm):</label>
+                                    <input type="number" id="height" min="100" max="250" placeholder="e.g., 175">
+                                    <small>Enter your height in centimeters</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="weight">Weight (kg):</label>
+                                    <input type="number" id="weight" min="30" max="300" step="0.1"
+                                        placeholder="e.g., 70.5">
+                                    <small>Enter your current weight in kilograms</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="activityLevel">Activity Level:</label>
+                                <select id="activityLevel">
+                                    <option value="">Select activity level</option>
+                                    <option value="sedentary">Sedentary (little to no exercise)</option>
+                                    <option value="lightly_active">Lightly Active (light exercise 1-3 days/week)
+                                    </option>
+                                    <option value="moderately_active">Moderately Active (moderate exercise 3-5
+                                        days/week)</option>
+                                    <option value="very_active">Very Active (hard exercise 6-7 days/week)</option>
+                                    <option value="extremely_active">Extremely Active (very hard exercise, physical job)
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Fitness Goals:</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="lose_weight"> Lose Weight
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="gain_weight"> Gain Weight
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="maintain_weight"> Maintain Weight
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="build_muscle"> Build Muscle
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="improve_endurance"> Improve Endurance
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="general_health"> General Health
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-primary">💾 Save Health Info</button>
+                        </form>
+                    </div>
+
+                    <!-- Dietary Information -->
+                    <div class="profile-section">
+                        <h3>🍽️ Dietary Information</h3>
+                        <form id="dietaryForm" class="profile-form">
+                            <div class="form-group">
+                                <label>Dietary Restrictions:</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="vegetarian"> Vegetarian
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="vegan"> Vegan
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="gluten_free"> Gluten-Free
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="dairy_free"> Dairy-Free
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="low_carb"> Low Carb
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="keto"> Ketogenic
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="paleo"> Paleo
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="mediterranean"> Mediterranean
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Allergies & Food Intolerances:</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="nuts"> Nuts
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="shellfish"> Shellfish
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="eggs"> Eggs
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="soy"> Soy
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="fish"> Fish
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="wheat"> Wheat
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="lactose"> Lactose Intolerance
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="healthConditions">Health Conditions:</label>
+                                <textarea id="healthConditions" rows="3"
+                                    placeholder="List any relevant health conditions (diabetes, hypertension, etc.)"></textarea>
+                                <small>This information helps us provide better meal recommendations</small>
+                            </div>
+
+                            <button type="submit" class="btn-primary">💾 Save Dietary Info</button>
+                        </form>
+                    </div>
+
+                    <!-- Profile Statistics -->
+                    <div class="profile-section">
+                        <h3>📊 Profile Statistics</h3>
+                        <div class="stats-grid" id="profileStats">
+                            <div class="stat-card">
+                                <div class="stat-number" id="bmiValue">-</div>
+                                <div class="stat-label">BMI</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="calorieGoal">-</div>
+                                <div class="stat-label">Daily Calorie Goal</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="mealPlansCount">0</div>
+                                <div class="stat-label">Meal Plans Created</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="ordersCount">0</div>
+                                <div class="stat-label">Orders Prepared</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Settings -->
+                    <div class="profile-section">
+                        <h3>⚙️ Account Settings</h3>
+                        <div class="settings-actions">
+                            <button onclick="profileManager.exportProfile()" class="btn-info">
+                                📄 Export Profile Data
+                            </button>
+                            <button onclick="profileManager.showDeleteConfirmation()" class="btn-danger">
+                                🗑️ Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="messages"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚠️ Delete Account</h3>
+                <button onclick="profileManager.closeDeleteModal()" class="close-btn">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <p><strong>This action cannot be undone!</strong></p>
+                <p>Deleting your account will permanently remove:</p>
+                <ul>
+                    <li>Your profile information</li>
+                    <li>All meal plans and grocery lists</li>
+                    <li>Order history</li>
+                    <li>All account data</li>
+                </ul>
+                <p>Are you absolutely sure you want to delete your account?</p>
+
+                <div class="delete-actions">
+                    <button onclick="profileManager.closeDeleteModal()" class="btn-secondary">
+                        Cancel
+                    </button>
+                    <button onclick="profileManager.deleteAccount()" class="btn-danger">
+                        Yes, Delete My Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="config-local.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/profileManager.js"></script>
+</body>
+
+</html>

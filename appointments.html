@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Meal Planner - Nutritionist Appointments</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>👨‍⚕️ Nutritionist Appointments</h1>
+            <div class="user-info">
+                <span id="userEmail" class="user-email"></span>
+                <button onclick="window.location.href='profile.html'" class="btn-info">👤 Profile</button>
+                <button id="logoutBtn" class="btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="appointments-container">
+                <div class="appointment-navigation">
+                    <button onclick="window.location.href='user.html'" class="btn-secondary">
+                        ← Back to Meal Planning
+                    </button>
+                    <button onclick="appointmentManager.showMyAppointments()" class="btn-info">
+                        📅 My Appointments
+                    </button>
+                </div>
+
+                <!-- Nutritionist Search & Filter -->
+                <div class="nutritionist-search-section">
+                    <h2>Find the Perfect Nutritionist</h2>
+                    <div class="search-filters">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="specializationFilter">Specialization:</label>
+                                <select id="specializationFilter">
+                                    <option value="">All Specializations</option>
+                                    <option value="Weight Management">Weight Management</option>
+                                    <option value="Diabetes">Diabetes</option>
+                                    <option value="Heart Health">Heart Health</option>
+                                    <option value="Sports Nutrition">Sports Nutrition</option>
+                                    <option value="Pediatric Nutrition">Pediatric Nutrition</option>
+                                    <option value="Food Allergies">Food Allergies</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="ratingFilter">Minimum Rating:</label>
+                                <select id="ratingFilter">
+                                    <option value="">Any Rating</option>
+                                    <option value="4.5">4.5+ Stars</option>
+                                    <option value="4.0">4.0+ Stars</option>
+                                    <option value="3.5">3.5+ Stars</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="priceFilter">Price Range:</label>
+                                <select id="priceFilter">
+                                    <option value="">Any Price</option>
+                                    <option value="0-50">$0 - $50</option>
+                                    <option value="50-75">$50 - $75</option>
+                                    <option value="75-100">$75 - $100</option>
+                                    <option value="100+">$100+</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <button onclick="appointmentManager.searchNutritionists()" class="btn-primary">
+                                    🔍 Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nutritionists List -->
+                <div id="nutritionistsList" class="nutritionists-grid">
+                    <div class="loading-placeholder">
+                        <div class="spinner"></div>
+                        <p>Loading nutritionists...</p>
+                    </div>
+                </div>
+
+                <!-- My Appointments Section -->
+                <div id="myAppointmentsSection" class="my-appointments-section hidden">
+                    <div class="section-header">
+                        <h2>📅 My Appointments</h2>
+                        <button onclick="appointmentManager.hideMyAppointments()" class="btn-secondary">
+                            ← Back to Search
+                        </button>
+                    </div>
+
+                    <div class="appointments-tabs">
+                        <button class="tab-btn active" onclick="appointmentManager.showAppointmentTab('upcoming')">
+                            Upcoming
+                        </button>
+                        <button class="tab-btn" onclick="appointmentManager.showAppointmentTab('past')">
+                            Past
+                        </button>
+                        <button class="tab-btn" onclick="appointmentManager.showAppointmentTab('cancelled')">
+                            Cancelled
+                        </button>
+                    </div>
+
+                    <div id="appointmentsList" class="appointments-list">
+                        <div class="loading-placeholder">
+                            <div class="spinner"></div>
+                            <p>Loading your appointments...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="messages"></div>
+            </div>
+        </div>
+
+        <!-- AI Insights Container -->
+        <div id="aiInsightsContainer"></div>
+
+        <!-- AI-Powered Appointment Insights -->
+        <div class="ai-appointment-insights" style="margin-top: 30px;" id="appointmentInsights">
+            <h3>🤖 AI Appointment Insights</h3>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h4>📋 Pre-Appointment Preparation</h4>
+                    <div id="preAppointmentTips">
+                        <p>AI will analyze your meal plans to suggest discussion topics for your upcoming appointments.
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <h4>📊 Progress Tracking</h4>
+                    <div id="progressAnalysis">
+                        <p>Track your nutrition goals and see AI-powered progress predictions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal-overlay hidden">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>📅 Book Appointment</h3>
+                <button onclick="appointmentManager.closeBookingModal()" class="close-btn">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <div id="bookingStep1" class="booking-step">
+                    <div class="nutritionist-info-card">
+                        <div class="nutritionist-avatar">
+                            <img id="modalNutritionistAvatar" src="" alt="Nutritionist" class="avatar-img">
+                        </div>
+                        <div class="nutritionist-details">
+                            <h4 id="modalNutritionistName"></h4>
+                            <div id="modalNutritionistSpecializations" class="specializations"></div>
+                            <div id="modalNutritionistRating" class="rating-display"></div>
+                            <div id="modalNutritionistRate" class="rate-display"></div>
+                        </div>
+                    </div>
+
+                    <form id="appointmentBookingForm" class="booking-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appointmentType">Appointment Type:</label>
+                                <select id="appointmentType" required>
+                                    <option value="">Select appointment type</option>
+                                    <option value="consultation">Initial Consultation (60 min)</option>
+                                    <option value="follow_up">Follow-up Session (30 min)</option>
+                                    <option value="meal_review">Meal Plan Review (30 min)</option>
+                                    <option value="weight_management">Weight Management (45 min)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="consultationMode">Consultation Mode:</label>
+                                <select id="consultationMode" required>
+                                    <option value="">Select consultation mode</option>
+                                    <option value="video">Video Call</option>
+                                    <option value="audio">Audio Call</option>
+                                    <option value="chat">Text Chat</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appointmentDate">Preferred Date:</label>
+                            <input type="date" id="appointmentDate" required min="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Available Time Slots:</label>
+                            <div id="timeSlots" class="time-slots-grid">
+                                <p class="select-date-first">Please select a date first</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userNotes">Notes for Nutritionist (Optional):</label>
+                            <textarea id="userNotes" rows="3"
+                                placeholder="Share any specific concerns, dietary restrictions, or goals you'd like to discuss..."></textarea>
+                        </div>
+
+                        <!-- AI-Enhanced Preparation Section -->
+                        <div class="ai-preparation-section"
+                            style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h5>🤖 AI Preparation Assistant</h5>
+                            <div id="aiPreparationSuggestions">
+                                <p>AI will analyze your meal history and suggest key topics to discuss...</p>
+                            </div>
+                        </div>
+
+                        <div class="booking-summary">
+                            <div class="summary-row">
+                                <span>Duration:</span>
+                                <span id="summaryDuration">-</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Date & Time:</span>
+                                <span id="summaryDateTime">-</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total Price:</span>
+                                <span id="summaryPrice">-</span>
+                            </div>
+                        </div>
+
+                        <div class="booking-actions">
+                            <button type="button" onclick="appointmentManager.closeBookingModal()"
+                                class="btn-secondary">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn-primary">
+                                Proceed to Payment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Call Modal -->
+    <div id="videoCallModal" class="modal-overlay hidden">
+        <div class="modal-content fullscreen">
+            <div class="modal-header">
+                <h3>📹 Video Consultation</h3>
+                <button onclick="appointmentManager.endCall()" class="end-call-btn">End Call</button>
+            </div>
+
+            <div class="modal-body">
+                <div id="videoCallContainer" class="video-call-container">
+                    <div id="remoteVideo" class="remote-video"></div>
+                    <div id="localVideo" class="local-video"></div>
+                    <div class="call-controls">
+                        <button id="muteBtn" class="control-btn">🎤</button>
+                        <button id="videoBtn" class="control-btn">📹</button>
+                        <button id="screenShareBtn" class="control-btn">🖥️</button>
+                        <button id="chatBtn" class="control-btn">💬</button>
+                        <button id="aiTranscribeBtn" class="control-btn"
+                            onclick="aiManager && aiManager.startSessionTranscription()"
+                            title="AI Transcription">🤖</button>
+                    </div>
+                </div>
+
+                <!-- AI Session Transcription -->
+                <div class="ai-session-panel" id="aiSessionPanel" style="display: none;">
+                    <h4>🤖 AI Session Assistant</h4>
+                    <div class="transcription-live" id="liveTranscription">
+                        Live transcription will appear here...
+                    </div>
+                    <div class="session-insights" id="sessionInsights">
+                        <h5>💡 Key Insights:</h5>
+                        <ul id="insightsList"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Coach Toggle Button -->
+    <button class="coach-toggle" onclick="aiManager && aiManager.toggleAICoach()" title="AI Nutrition Coach">
+        🤖
+    </button>
+
+    <!-- AI Coach Container -->
+    <div id="aiCoachContainer" class="ai-coach-container">
+        <div class="coach-header">
+            <h4>🤖 AI Appointment Assistant</h4>
+            <button onclick="aiManager && aiManager.toggleAICoach()" class="close-btn">✕</button>
+        </div>
+        <div class="coach-chat" id="coachChat">
+            <div class="coach-message ai">
+                Hi! I can help you prepare for appointments, suggest questions to ask, and analyze your consultation
+                notes. How can I assist?
+            </div>
+        </div>
+        <div class="coach-input">
+            <input type="text" id="coachInput" placeholder="Ask about appointments or nutritionist consultations...">
+            <button onclick="aiManager && aiManager.sendCoachMessage()" class="btn-primary">Send</button>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="config-local.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/appointmentManager.js"></script>
+    <script src="js/aiManager.js"></script>
+</body>
+
+</html>

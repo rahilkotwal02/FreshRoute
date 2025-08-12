@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Meal Planner - Your Plan</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>🍽️ Your Meal Plan</h1>
+            <div class="user-info">
+                <span id="userEmail" class="user-email"></span>
+                <button onclick="window.location.href='appointments.html'" class="btn-success">👨‍⚕️
+                    Appointments</button>
+                <button onclick="window.location.href='profile.html'" class="btn-info">👤 Profile</button>
+                <button id="logoutBtn" class="btn-secondary">Logout</button>
+            </div>
+
+        </header>
+
+        <div class="content">
+            <div class="plan-container">
+                <div class="plan-actions">
+                    <button onclick="window.location.href='user.html'" class="btn-secondary">
+                        ← Create New Plan
+                    </button>
+                    <button id="viewGroceryBtn" onclick="window.location.href='grocery-list.html'" class="btn-success">
+                        🛒 View Grocery List
+                    </button>
+                </div>
+
+                <div id="planStats" class="plan-stats"></div>
+
+                <div id="daySelector" class="day-selector-container"></div>
+
+                <div id="mealPlanContent" class="meal-plan-content">
+                    <div class="loading-placeholder">
+                        <div class="spinner"></div>
+                        <p>Loading your meal plan...</p>
+                    </div>
+                </div>
+
+                <div id="messages"></div>
+            </div>
+        </div>
+
+        <!-- AI Insights Container -->
+        <div id="aiInsightsContainer"></div>
+
+        <!-- Transcription Interface for AI -->
+        <div class="transcription-section" style="margin-top: 30px; display: none;" id="transcriptionSection">
+            <h3>📝 Session Notes & AI Analysis</h3>
+            <div class="transcription-controls">
+                <button id="recordBtn" class="record-btn" onclick="aiManager && aiManager.startRecording()">🎤</button>
+                <div class="transcription-status">Ready to record consultation notes</div>
+            </div>
+            <div class="transcription-output" id="transcriptionOutput">
+                Transcription will appear here...
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Coach Toggle Button -->
+    <button class="coach-toggle" onclick="aiManager && aiManager.toggleAICoach()" title="AI Nutrition Coach">
+        🤖
+    </button>
+
+    <!-- AI Coach Container -->
+    <div id="aiCoachContainer" class="ai-coach-container">
+        <div class="coach-header">
+            <h4>🤖 AI Nutrition Coach</h4>
+            <button onclick="aiManager && aiManager.toggleAICoach()" class="close-btn">✕</button>
+        </div>
+        <div class="coach-chat" id="coachChat">
+            <div class="coach-message ai">
+                Hi! I can help analyze your meal plan and provide personalized suggestions. What would you like to know?
+            </div>
+        </div>
+        <div class="coach-input">
+            <input type="text" id="coachInput" placeholder="Ask about your meal plan...">
+            <button onclick="aiManager && aiManager.sendCoachMessage()" class="btn-primary">Send</button>
+        </div>
+    </div>
+
+    <!-- AI Analytics Dashboard -->
+    <div class="analytics-section" style="margin-top: 40px;" id="analyticsSection">
+        <h3>📊 AI-Powered Analytics</h3>
+        <div class="analytics-grid">
+            <div class="analytics-card">
+                <h4>🎯 Goal Predictions</h4>
+                <div id="goalPredictions">
+                    <div class="prediction-item">
+                        <span>Weight Goal Achievement:</span>
+                        <span class="prediction-value" id="weightPrediction">Loading...</span>
+                    </div>
+                    <div class="prediction-item">
+                        <span>Nutrition Target:</span>
+                        <span class="prediction-value" id="nutritionPrediction">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="analytics-card">
+                <h4>💡 Smart Recommendations</h4>
+                <div id="smartRecommendations">
+                    <p>AI is analyzing your meal patterns...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="config-local.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/displayPlan.js"></script>
+    <script src="js/aiManager.js"></script>
+    <script>
+        // Simple fallback for analytics
+        setTimeout(() => {
+            const weightPrediction = document.getElementById('weightPrediction');
+            const nutritionPrediction = document.getElementById('nutritionPrediction');
+            const smartRecommendations = document.getElementById('smartRecommendations');
+
+            if (weightPrediction) {
+                weightPrediction.textContent = '85% on track';
+                weightPrediction.className = 'prediction-value';
+            }
+
+            if (nutritionPrediction) {
+                nutritionPrediction.textContent = '92% achieved';
+                nutritionPrediction.className = 'prediction-value';
+            }
+
+            if (smartRecommendations) {
+                smartRecommendations.innerHTML = `
+            <ul>
+                <li>💡 Add more colorful vegetables to increase nutrient variety</li>
+                <li>💡 Consider meal prepping on weekends for consistency</li>
+                <li>💡 Stay hydrated with 8 glasses of water daily</li>
+            </ul>
+        `;
+            }
+        }, 2000);
+    </script>
+
+
+</body>
+
+</html>

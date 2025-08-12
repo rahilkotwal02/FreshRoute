@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Meal Planner - Preferences</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>🍽️ Smart Meal Planner</h1>
+            <div class="user-info">
+                <span id="userEmail" class="user-email"></span>
+                <button onclick="window.location.href='appointments.html'" class="btn-success">👨‍⚕️
+                    Appointments</button>
+                <button onclick="window.location.href='profile.html'" class="btn-info">👤 Profile</button>
+                <button id="logoutBtn" class="btn-secondary">Logout</button>
+            </div>
+
+        </header>
+
+        <div class="content">
+            <div class="preferences-container">
+                <h2>Set Your Meal Preferences</h2>
+                <p class="description">Tell us about your dietary preferences and we'll create a personalized meal plan
+                    for you.</p>
+
+                <form id="preferencesForm" class="preferences-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dietType">Diet Preference:</label>
+                            <select id="dietType" required>
+                                <option value="">Select diet preference</option>
+                                <option value="balanced">Balanced</option>
+                                <option value="high-protein">High Protein</option>
+                                <option value="low-carb">Low Carb</option>
+                                <option value="low-fat">Low Fat</option>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="keto-friendly">Keto</option>
+                                <option value="paleo">Paleo</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="healthLabels">Health Preferences:</label>
+                            <select id="healthLabels">
+                                <option value="">Any</option>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="gluten-free">Gluten-Free</option>
+                                <option value="dairy-free">Dairy-Free</option>
+                                <option value="nut-free">Nut-Free</option>
+                                <option value="low-sodium">Low Sodium</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="mealsPerDay">Meals per Day:</label>
+                            <select id="mealsPerDay" required>
+                                <option value="">Select number of meals</option>
+                                <option value="2">2 Meals (Breakfast + Dinner)</option>
+                                <option value="3">3 Meals (Breakfast + Lunch + Dinner)</option>
+                                <option value="4">4 Meals (+ Snack)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="planType">Plan Duration:</label>
+                            <select id="planType" required>
+                                <option value="">Select plan duration</option>
+                                <option value="daily">Daily Plan (1 day)</option>
+                                <option value="weekly">Weekly Plan (7 days)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="calories">Target Calories per Day:</label>
+                            <input type="number" id="calories" placeholder="e.g., 2000" min="1000" max="5000">
+                            <small>Optional - leave empty for default recommendations</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cuisine">Cuisine Preference:</label>
+                            <select id="cuisine">
+                                <option value="">Any Cuisine</option>
+                                <option value="american">American</option>
+                                <option value="asian">Asian</option>
+                                <option value="british">British</option>
+                                <option value="chinese">Chinese</option>
+                                <option value="french">French</option>
+                                <option value="indian">Indian</option>
+                                <option value="italian">Italian</option>
+                                <option value="japanese">Japanese</option>
+                                <option value="mexican">Mexican</option>
+                                <option value="middle eastern">Middle Eastern</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="generateBtn" class="btn-primary btn-large">
+                        <span class="btn-text">Generate My Meal Plan</span>
+                        <span class="btn-icon">🚀</span>
+                    </button>
+                </form>
+
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p id="loadingText">Generating your personalized meal plan...</p>
+                </div>
+
+                <div id="messages"></div>
+            </div>
+        </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="config-local.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/mealPlanner.js"></script>
+</body>
+
+</html>

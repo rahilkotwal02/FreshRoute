@@ -1,0 +1,3 @@
+# Local configuration files
+config-local.js
+*.local.js
